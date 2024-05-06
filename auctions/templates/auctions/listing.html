@@ -1,0 +1,121 @@
+{% extends 'auctions/layout.html' %}
+
+{% block body %}
+
+<div id="listings">
+    <div id="listing">
+        
+        <div class="one-quarter-column">
+            <img src="{{ listing.image }}" width="300">
+        </div>
+
+        <div id="listing-content" class="three-quarters-column">
+            <h2>Title: {{ listing.title }}</h2>
+
+            <li>Content: {{ listing.content }}</li>
+            <li>Bid: {{ listing.cost }}</li>
+
+            {% if user.is_authenticated %}
+
+                {% if isOwner and isLive %}
+                    <h3>End Auction at current bid</h3>
+
+                    <form action="{% url 'endAuction' listing.id %}" class="border-top" method="post">
+                        {% csrf_token %}
+            
+                        <div class="form-field">
+                            <button type="submit" style="margin-bottom: 8px;">End now</button>
+                        </div>
+            
+                    </form>
+
+                {% elif isOwner and not isLive %}
+
+                    <h3>Restore Auction at last bid</h3>
+
+                    <form action="{% url 'restoreAuction' listing.id %}" class="border-top" method="post">
+                        {% csrf_token %}
+            
+                        <div class="form-field">
+                            <button type="submit" style="margin-bottom: 8px;">Restore now</button>
+                        </div>
+            
+                    </form>
+
+                {% endif %}
+
+                {% if isWinning and not isLive %}
+
+                    <h3>You won the auction!!!</h3>
+
+                {% endif %}
+
+                {% if isInWatchlist %}
+
+                    <form action="{% url 'removeFromWatchlist' listing.id %}" class="border-top" method="post">
+                        {% csrf_token %}
+            
+                        <div class="form-field">
+                            <button type="submit" style="margin-bottom: 8px;">Remove from Watchlist</button>
+                        </div>
+            
+                    </form>
+                    
+                {% else %}
+
+                    <form action="{% url 'addToWatchlist' listing.id %}" method="post">
+                        {% csrf_token %}
+            
+                        <div class="form-field">
+                            <button type="submit" style="margin-bottom: 8px;">Add to Watchlist</button>
+                        </div>
+            
+                    </form>
+
+                {% endif %}
+
+                <h4 class="border-top">Add new bid</h4>
+
+                <form action="{% url 'addBid' listing.id %}" method="post">
+                    {% csrf_token %}
+        
+                    <div class="form-field">
+                        <label for="addBid">Add bid</label>
+                        <input type="text" name="addBid">
+                        <button type="submit">Submit</button>
+                    </div>
+                </form>
+
+                <h4 class="border-top">Comment</h4>
+
+                <form action="{% url 'addComment' listing.id %}" method="post">
+                    {% csrf_token %}
+        
+                    <div class="form-field">
+                        <label for="addComment">Add Comment</label>
+                        <textarea type="text" name="addComment" rows="4" cols="50"></textarea>
+                        <button type="submit">Submit</button>
+                    </div>
+                </form>
+
+                {% for comment in Comments %}
+
+                    <li>{{ comment.message }}</li>
+
+                {% endfor %}
+
+                {% if messages %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
