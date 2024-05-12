@@ -23,25 +23,25 @@
         </form>
 
 
-                {% for listing in listings %}
-                    <a href="{% url 'listing' listing.id %}">
-                    <div id="listing">
-                        <div class="one-quarter-column">
-                            <img src="{{ listing.image }}" width="300">
-                        </div>
+        {% for listing in listings %}
+            <a href="{% url 'listing' listing.id %}">
+            <div id="listing">
+                <div class="one-quarter-column">
+                    <img src="{{ listing.image }}" width="300">
+                </div>
 
-                        <div id="listing-content" class="three-quarters-column">
-                            <h3>Title: {{ listing.title }}</h3>
-                            <ul>
-                                <li>Content: {{ listing.content }}</li>
-                                <li>Bid: {{ listing.cost }}</li>
-                                <li>Category: {{ listing.category}}</li>
-                            </ul>
-                            
-                        </div>
-                    </div>
+                <div id="listing-content" class="three-quarters-column">
+                    <h3>Title: {{ listing.title }}</h3>
+                    <ul>
+                        <li>Content: {{ listing.content }}</li>
+                        <li>Bid: {{ listing.cost }}</li>
+                        <li>Category: {{ listing.category}}</li>
+                    </ul>
+                    
+                </div>
+            </div>
 
-                {% endfor %}
+        {% endfor %}
 
     </div>
 
