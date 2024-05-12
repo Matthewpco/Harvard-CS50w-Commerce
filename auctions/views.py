@@ -43,8 +43,6 @@ def addBid(request, listing_id):
         current_listing = Listing.objects.get(pk=listing_id)
         currentUser = request.user
         currentBid = int(current_listing.cost.bid)
-        # somehow log or echo the result of currentBid
-        print(currentBid)  # This will print the bid amount to the console
         if newBid > currentBid:
             # Make new bid db object and save
             winningBid = Bid(bid=newBid, user=currentUser)
@@ -63,7 +61,6 @@ def addBid(request, listing_id):
     
 def create(request):
     if request.method == "POST":
-        
         # Get the form fields from submission
         title = request.POST["title"]
         content = request.POST["content"]
@@ -85,19 +82,18 @@ def create(request):
 
         return HttpResponseRedirect(reverse("index"))
     
-    # Need to handle session and listing object
     else:
         return render(request, "auctions/create.html", {
             "form": NewListingForm() 
             })    
 
 def listing(request, listing_id):
+
     current_listing = Listing.objects.get(pk=listing_id)
     isInWatchlist = request.user in current_listing.watchlist.all()
     isWinning = request.user == current_listing.cost.user
     isOwner = request.user == current_listing.author
     isLive = current_listing.isLive
-    print(isWinning)
     hasComments = Comments.objects.filter(listing=current_listing)
     return render(request, "auctions/listing.html", {
             "listing": current_listing,
