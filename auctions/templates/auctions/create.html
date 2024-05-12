@@ -5,14 +5,16 @@
     Users should also optionally be able to provide a URL for an image for the listing and/or a category (e.g. Fashion, Toys, Electronics, Home, etc.). 
 -->
 {% block body %}
-    <h2>Create New Listing</h2>
+    
 
-    <div>
+    <div id="create-listing">
+        <h2>Create New Listing</h2>
+
         {% if user.is_authenticated %}
             Signed in as <strong>{{ user.username }}</strong>.
             Form to submit auction fields.
 
-            <form action="{% url 'create' %}" method="post">
+            <form action="{% url 'create' %}" id="create-form" method="post">
                 {% csrf_token %}
                 <div class="form-field">
                     {{ form.title.label_tag }}
