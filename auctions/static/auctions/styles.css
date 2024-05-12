@@ -63,15 +63,23 @@ header {
     width: 120px;
 }
 
-#category-form select, #category-form button {
+#category-form select, #category-form button, #create-form select, #create-form button, #create-form input, #create-form textarea {
     width: 100%;
 }
 
-#category-form button, #listing-content .form-field button {
+#category-form button, #listing-content .form-field button, #create-form button {
     margin-top: 8px;
 }
 
 .border-top {
     border-top: 1px solid #bcbcbc;
     width: 300px;
+}
+
+#create-listing {
+    padding: 0 5%;;
+}
+
+#create-form {
+    width: 400px;
 }
